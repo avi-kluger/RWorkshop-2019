@@ -6,6 +6,6 @@
 | Homework | Importing data from Excel or SPSS to R <br>Checking for missing data<br>Exploring distributions |
 |  Day 2 Morning | ifelse  <br>Writing functions and loops <br>Reading help menus for built-in functions and packages <br>Searching help on the web <br>Reliability testing, building scales, creating files with scales only |
 | Day 2 Afternoon | Hypothesis testing: t-test, ANOVA, regression |
-| Homework | Running regressions intermmediate <br>Preparing a scatterplot with a regression line   |
-| Day 3 Morning | Using Rmarkdown to create text and Word tables |
+| Homework | Running ANOVA, regressions  <br>Preparing a scatterplot with a regression line   |
+| Day 3 Morning | Regressions intermmreediate (centering, standardiztion, moderation)<br>Using Rmarkdown to create text and Word tables |
 | Day 3 Afternoon | Using graphics packages <br>Defining the shape of the graph by the user <br>Saving publication ready graphs as PNG or PDF

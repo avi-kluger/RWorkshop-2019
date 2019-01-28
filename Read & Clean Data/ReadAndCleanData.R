@@ -1,5 +1,3 @@
-# Section One ---------------------------------
-
 rm(list = ls())
 cat ("\014")
 if(is.null(dev.list()) == FALSE) dev.off()
@@ -20,6 +18,27 @@ is.na(listen_df$filter1)
 
 # count number of missing data
 sum(is.na(listen_df$filter1))
+################################################################################
+# Power Analysis examples 
+################################################################################
+
+# For introduction and examples see http://www.statmethods.net/stats/power.html
+# install.packages("yaml") 
+if (!require('pwr')) {
+  install.packages('pwr')
+}
+library('pwr')
+
+pwr.t.test(d = 0.50, 
+           sig.level = .05, 
+           power = .80, 
+           type = c("two.sample"), 
+           alternative = c("greater"))
+
+pwr.r.test(r = .2, 
+           power = .80, 
+           sig.level = .05, 
+           alternative = "two.sided")
 
 # print to console the record with the missing datum on filter1
 listen_df[which(is.na(listen_df$filter1)), ]
@@ -137,8 +156,3 @@ apa.cor.table(listenClean_df[, trust])
 apa.cor.table(listenClean_df[, trust], 
               filename = "MyFirstTable.doc", 
               table.number = 5)
-# Section Two =================================
-write.csv(listenClean_df, "listenClean.csv")
-# Section Three #############################
-
-save.image("Listen.RData")

@@ -3,12 +3,8 @@ rm(list = ls())
 cat ("\014")
 if(is.null(dev.list()) == FALSE) dev.off()
 
-load("Listen.RData")
-l_df <- listenClean_df
-rm(list=setdiff(ls(), c("l_df", "demographics")))
+load("ListenRecoded.RData")
 
-if (!require('apaTables')) install.packages('apaTables'); library('apaTables')
-if (!require('psych')) install.packages('psych'); library('psych')
 
 # function for boxplot
 buildScale <- function(scaleName){
@@ -18,7 +14,6 @@ buildScale <- function(scaleName){
 
 buildScale("trust")
 buildScale("PAIR")
-
 
 # add to function stem-and-leaf display
 buildScale <- function(scaleName){
@@ -39,6 +34,8 @@ buildScale <- function(scaleName){
 buildScale("trust")
 
 # Add describe function from *psych* package. Note describe is wrapped w/ print
+
+if (!require('psych')) install.packages('psych'); library('psych')
 
 buildScale <- function(scaleName){
   items    <- grep(scaleName, names(l_df))
@@ -61,7 +58,10 @@ buildScale <- function(scaleName, df = l_df){
 buildScale("trust", df = l_df)
 buildScale("trust")
 
-# add alpha. note that alphs is called together with the package name
+# add alpha
+if (!require('apaTables')) install.packages('apaTables'); library('apaTables')
+
+# note that alpha is called together with the package name
 # This prevents clashes between alpha and the graphics of R
 buildScale <- function(scaleName, df = l_df){
   items <- grep(scaleName, names(df))
@@ -89,7 +89,7 @@ buildScale("trust")
 
 # function to build scales
 buildScale <- function(scaleName, df = l_df){
-  items <- grep(scaleName, names(df))
+  items    <- grep(scaleName, names(df))
   scale_df <- df[, items]
   print(describe(scale_df))
   boxplot(scale_df)
@@ -102,5 +102,3 @@ buildScale <- function(scaleName, df = l_df){
 }
 buildScale("trust")
 buildScale("PAIR")
-
-

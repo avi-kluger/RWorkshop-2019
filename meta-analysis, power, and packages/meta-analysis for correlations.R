@@ -53,7 +53,7 @@ if (!require('pwr')) {
 }
 library('pwr')
 
-pwr.t.test(d = 0.50, 
+pwr.t.test(d = 1, 
            sig.level = .05, 
            power = .80, 
            type = c("two.sample"), 

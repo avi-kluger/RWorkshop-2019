@@ -3,9 +3,26 @@ rm(list = ls())
 cat ("\014")
 if(is.null(dev.list()) == FALSE) dev.off()
 
-load("Listen.RData")
-l_df <- listenClean_df
-rm(list=setdiff(ls(), c("l_df", "demographics")))
+load("ListenRecoded.RData")
+
+# Integity test
+l_df$noIntegrity <- 0
+
+temp <- l_df[, grep("support", names(l_df))]
+varTest <- apply(temp, 1, var)
+l_df$noIntegrity <- ifelse(varTest == 0, 1, 0) + l_df$noIntegrity
+l_df$noIntegrity
+
+temp <- l_df[, grep("PAIR_", names(l_df))]
+varTest <- apply(temp, 1, var)
+l_df$noIntegrity <- ifelse(varTest == 0, 1, 0) + l_df$noIntegrity
+l_df$noIntegrity
+
+# Reverse coding
+l_df[1:10, grep("PAIR_", names(l_df))]
+reverseVector <- c(paste0("PAIR_", 6:15))
+l_df[, reverseVector] <- 10 - l_df[, reverseVector]
+l_df[1:10, grep("PAIR_", names(l_df))]
 
 if (!require('apaTables')) install.packages('apaTables'); library('apaTables')
 if (!require('psych')) install.packages('psych'); library('psych')
@@ -31,12 +48,23 @@ for (i in 1:length(scaleVector)) {
   l_df  <- buildScale(scaleVector[i])
 }
 
+# Find the numbers of the colomuns that contain the scale scores
 scaleColumns <- which(colnames(l_df) %in%  scaleVector)
+scaleColumns
 
+# Redefine demographics because, in previous steps, ifelse results of cateogries
+# were added
+demographics <- grep("DemographicsIntro", names(l_df)):
+                grep("yearsCategoryCharacter", names(l_df))
+demographics
+
+# keep only demographics and scales (drop all items) and assign to a new df
 l_scale_df <- l_df[, c(demographics, scaleColumns)]
 
+# clean constants and unnecesary columns
 demoJunk   <- c("DemographicsIntro", "na_count", "naCount")
 junkColumn <- which(colnames(l_scale_df) %in%  demoJunk)
+junkColumn
 l_scale_df <- l_scale_df[, -junkColumn]
 
 rm(list=setdiff(ls(), "l_scale_df"))         

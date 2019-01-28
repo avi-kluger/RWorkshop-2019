@@ -8,16 +8,27 @@ rm(list=setdiff(ls(), c("l_df", "demographics")))
 
 # ifelse Section ---------------------------------------------------------------
 
+# minimal code demonstration
+a <- 1:10
+a
+# Usage: ifelse(test, yes, no)
+b <- ifelse(a > 8, 1, 0)
+b
+table(b)
+c <- ifelse(a > 8, "top student", "other student")
+c
+table(c)
+
+# the real thing
 # Recode the gender variables. The survey had 1 - male; 2 - female; 3 - other
 
 names(l_df[, demographics])
 
 table(l_df$gender)
 table(l_df$supervisor_gender)
-l_df$genderName  <- ifelse(l_df$gender == 1, "Male", "Female")
-l_df$SgenderName <- ifelse(l_df$supervisor_gender == 1, "Male", "Female")
+l_df$genderChar  <- ifelse(l_df$gender == 1, "Male", "Female")
+l_df$SgenderChar <- ifelse(l_df$supervisor_gender == 1, "Male", "Female")
 
-table(l_df$years_together_1)
 stem(l_df$years_together_1)
 
 l_df$yearsCategory <- ifelse(l_df$years_together_1 < 1, 1,
@@ -29,4 +40,6 @@ l_df$yearsCategoryCharacter <- ifelse(l_df$years_together_1 < 1, "Under a year",
                                          "More than two years"))
 table(l_df$yearsCategoryCharacter)
 
-# A note on *if* in R -- VERY IMPORTANT! if operates only on a atomic vector
+# A note on *if* in R -- VERY IMPORTANT! if operates only on an atomic vector
+
+save.image("ListenRecoded.RData")

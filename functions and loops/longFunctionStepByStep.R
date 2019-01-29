@@ -35,9 +35,9 @@ buildScale("trust")
 
 # Add describe function from *psych* package. Note describe is wrapped w/ print
 
-if (!require('psych')) install.packages('psych'); library('psych')
 
 buildScale <- function(scaleName){
+if (!require('psych')) install.packages('psych'); library('psych')
   items    <- grep(scaleName, names(l_df))
   scale_df <- l_df[, items]
   boxplot(scale_df)
@@ -45,10 +45,10 @@ buildScale <- function(scaleName){
   print(describe(scale_df))
 }
 
-buildScale("trust")
+buildScale("support")
 
 # Add a second argument to function with defualt
-buildScale <- function(scaleName, df = l_df){
+buildScale <- function(scaleName = "PAIR", df = l_df){
   items <- grep(scaleName, names(df))
   scale_df <- df[, items]
   boxplot(scale_df)
@@ -57,7 +57,6 @@ buildScale <- function(scaleName, df = l_df){
 }
 buildScale("trust", df = l_df)
 buildScale("trust")
-
 # add alpha
 if (!require('apaTables')) install.packages('apaTables'); library('apaTables')
 
@@ -88,7 +87,8 @@ buildScale <- function(scaleName, df = l_df){
 buildScale("trust")
 
 # function to build scales
-buildScale <- function(scaleName, df = l_df){
+buildScale <- function(scaleName, df = l_df,
+                       out_df = "l_df"){
   items    <- grep(scaleName, names(df))
   scale_df <- df[, items]
   print(describe(scale_df))
@@ -98,7 +98,7 @@ buildScale <- function(scaleName, df = l_df){
   apa.cor.table(scale_df)
   print(psych::alpha(scale_df))
   df[, scaleName] <- rowMeans(scale_df)
-  assign("l_final_df", df, envir = .GlobalEnv)
+  assign(out_df, df, envir = .GlobalEnv)
 }
 buildScale("trust")
 buildScale("PAIR")

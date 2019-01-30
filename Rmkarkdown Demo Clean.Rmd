@@ -1,0 +1,45 @@
+---
+title: "RMarkdown Demo"
+author: "Avi Kluger"
+date: "January 30, 2019"
+output:
+  word_document: default
+  html_document: default
+---
+#Method
+##Participants
+
+```{r echo=FALSE}
+load("ListeningFinal.RData")
+```
+A total of `r nrow(l_scale_df)` answered the listening survey, *M*~age~ = `r round(mean(l_scale_df$age_1, na.rm = TRUE), 1)` (`r round(sd(l_scale_df$age_1, na.rm = TRUE), 2)`), `r round((mean(l_scale_df$gender, na.rm = TRUE) - 1) *100, 1)`% females.
+
+Descritive statistics is provided in Table 1.
+
+```{r echo=FALSE, message=FALSE}
+if (!require('psych')) install.packages('psych'); library('psych')
+
+startColumn <- grep("trust", names(l_scale_df))
+endColumn   <- ncol(l_scale_df)
+
+library('knitr')
+Table1 <- describe(l_scale_df[, startColumn:endColumn])[, c("mean", "sd", "skew", "kurtosis")]
+
+kable(round(Table1, 2), 
+      caption = "Table 1. Descriptive statistics for listening-related scales")
+```
+
+Surprisingly, we did not find the interaction we did not hypothesized.  As can be seen in Figure 1.
+
+```{r echo=FALSE, message=FALSE}
+if (!require('pequod')) install.packages('pequod'); library('pequod')
+mod <- lmres(support ~ PAIR*tenure, center = c("PAIR", "tenure"), 
+             data = l_scale_df)
+S_slopes <- simpleSlope(mod, pred = "PAIR", mod1 = "tenure")
+theme_set(theme_bw())
+PlotSlope(S_slopes)
+```
+
+*Figure 1.* The effect of learning too much R in one week on the well-being of novices by tenure in using SPSS or Stata
+
+

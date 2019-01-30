@@ -61,5 +61,5 @@ bargraph.CI(SgenderChar, support, group = genderChar, data = l_scale_df,
             xlab = "Gender of employee", ylab = "Support", 
             cex.lab = 1.5, x.leg = 1,
             col = "black", angle = 45, cex.names = 1.25,
-            density = c(0,20), legend = TRUE, trace.label = TRUE)
+            density = c(0,20), legend = TRUE)
 

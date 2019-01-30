@@ -86,9 +86,13 @@ buildScale <- function(scaleName, df = l_df){
 }
 buildScale("trust")
 
+# Change the function below and replace l_df with your dataframe in the
+# first and the last line. But, see more complex function below that
+# will not require change in the function
+
 # function to build scales
-buildScale <- function(scaleName, df = l_df,
-                       out_df = "l_df"){
+
+buildScale <- function(scaleName, df = l_df){
   items    <- grep(scaleName, names(df))
   scale_df <- df[, items]
   print(describe(scale_df))
@@ -98,7 +102,48 @@ buildScale <- function(scaleName, df = l_df,
   apa.cor.table(scale_df)
   print(psych::alpha(scale_df))
   df[, scaleName] <- rowMeans(scale_df)
-  assign(out_df, df, envir = .GlobalEnv)
+  assign("l_df", df, envir = .GlobalEnv)
 }
 buildScale("trust")
 buildScale("PAIR")
+
+# function to build scales that uses a loop inside the function, to process
+# a vector of scales.  It returns the same input data frame with the added
+# scales.
+
+buildScale <- function(scaleNames, df = l_df) {
+  # Use for loop to automate scale buildScale
+  for (scaleName in scaleNames) {
+    items <- grep(scaleName, names(df))
+    scale_df <- df[, items]
+    print(describe(scale_df))
+    boxplot(scale_df)
+    apply(scale_df, 2, stem)
+    print(as.dist(round(cor(scale_df), 2)))
+    apa.cor.table(scale_df)
+    print(psych::alpha(scale_df))
+    df[, scaleName] <- rowMeans(scale_df)
+  }
+  return(df)
+}
+
+# function to build scales
+buildScale <- function(scaleNames, df = l_df) {
+  # Use for loop to automate scale buildScale
+  for (scaleName in scaleNames) {
+    items <- grep(scaleName, names(df))
+    scale_df <- df[, items]
+    print(describe(scale_df))
+    boxplot(scale_df)
+    apply(scale_df, 2, stem)
+    print(as.dist(round(cor(scale_df), 2)))
+    apa.cor.table(scale_df)
+    print(psych::alpha(scale_df))
+    df[, scaleName] <- rowMeans(scale_df)
+  }
+  return(df)
+}
+
+# Call the function that can receive a vector of scales,
+# and place its output in a new df
+out_df      <- buildScale(c("trust", "Empathy", "PAIR", "support"))

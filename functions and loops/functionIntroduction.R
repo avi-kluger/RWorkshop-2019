@@ -1,7 +1,7 @@
 rm(list = ls())
 if(is.null(dev.list()) == FALSE) dev.off()
 cat ("\014")
-
+ 
 # 1. Simple example of the principle
 # basic structure
 f <- function(arguments) {
@@ -13,7 +13,7 @@ f <- function(a) {
   a^3
 }
 f(a = 5)
-f(5)
+f(1:5)
 
 # basic
 calcPercent <- function (fraction) {
@@ -56,7 +56,7 @@ Cohen.s.d <- function (m1, m2, s1, s2, n1, n2) {
   numerator <- product1 + product2
   denom     <- n1 + n2 -2
   pooled    <- sqrt(numerator/denom)
-  d         <- 1 * diff/pooled
+  d         <- diff/pooled
   # print(paste0("Cohen's d = ", round(d, digits = 3)))
   round(d, digits = 3)
 }

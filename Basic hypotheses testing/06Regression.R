@@ -1,6 +1,6 @@
 rm(list = ls())
-cat ("\014")
 if(is.null(dev.list()) == FALSE) dev.off()
+cat ("\014")
 
 load("ListeningFinal.RData")
 

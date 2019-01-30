@@ -26,8 +26,11 @@ names(l_df[, demographics])
 
 table(l_df$gender)
 table(l_df$supervisor_gender)
-l_df$genderChar  <- ifelse(l_df$gender == 1, "Male", "Female")
-l_df$SgenderChar <- ifelse(l_df$supervisor_gender == 1, "Male", "Female")
+l_df$genderChar  <- ifelse(l_df$gender == 1, "Male", 
+                           ifelse(l_df$gender == 2, "Female", NA))
+l_df$SgenderChar <- ifelse(l_df$supervisor_gender == 1, "Boss Male", 
+                     ifelse(l_df$supervisor_gender == 2, "Boss Female", NA))
+table(l_df$SgenderChar)
 
 stem(l_df$years_together_1)
 
@@ -42,4 +45,5 @@ table(l_df$yearsCategoryCharacter)
 
 # A note on *if* in R -- VERY IMPORTANT! if operates only on an atomic vector
 
+rm(list=setdiff(ls(), "l_df")) 
 save.image("ListenRecoded.RData")

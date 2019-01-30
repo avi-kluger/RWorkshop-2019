@@ -35,3 +35,28 @@ summary(fit2)
 confint(fit2)
 
 plot(l_scale_df$PAIR, predict(fit2))
+
+# Create a function to repeat the above for other variables
+
+test.Curve <- function (y, x, df){
+  fit <- lm(y ~ x + I(x^2), data = df)
+  print(summary(fit))
+  print(confint(fit))
+  plot(x, predict(fit))
+}
+test.Curve(support, PAIR, l_scale_df)
+test.Curve(support, trust, l_scale_df)
+
+# This failed the confint and the plot -- needed investigation
+# The crook was NA.  Solved with adding na.action = "na.exclude" 
+test.Curve(trust, age_1, l_scale_df)
+
+test.Curve <- function (y, x, df){
+  fit <- lm(y ~ x + I(x^2), 
+            data = df, 
+            na.action = "na.exclude")
+  print(summary(fit))
+  print(confint(fit))
+  plot(x, predict(fit))
+}
+test.Curve(trust, age_1, l_scale_df)

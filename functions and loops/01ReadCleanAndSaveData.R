@@ -9,6 +9,8 @@ listen_df <- read.csv(
              stringsAsFactors = FALSE)
 
 # Create a variable that counts NA per row
+# It is created with an *Anonymous function*. To read about it, see 
+# http://adv-r.had.co.nz/Functional-programming.html#anonymous-functions
 listen_df$naCount <- apply(listen_df, 1, function(x) sum(is.na(x)))
 
 # explore the frequency of missing data by row

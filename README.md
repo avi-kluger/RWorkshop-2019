@@ -9,3 +9,5 @@
 | Homework | Running ANOVA, regressions  <br>Preparing a scatterplot with a regression line   |
 | Day 3 Morning | Regressions intermmreediate (centering, standardiztion, moderation)<br>Using Rmarkdown to create text and Word tables |
 | Day 3 Afternoon | Using graphics packages <br>Defining the shape of the graph by the user <br>Saving publication ready graphs as PNG or PDF
+
+Please take this survey https://huji.az1.qualtrics.com/jfe/form/SV_e9W83Izkp3gY9Q9

@@ -1,7 +1,0 @@
----
-title: "Welcome to the R workshop"
-author: "Avi Kluger"
-date: "January 27, 2019"
-output: html_document
----
-#Please GO to https://github.com/avi-kluger, for workshop materials

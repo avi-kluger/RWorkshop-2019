@@ -64,7 +64,7 @@ theme_set(theme_bw())
 ggplot(l_scale_df, aes(PAIR, support, linetype = genderChar)) 
 
 ggplot(l_scale_df, aes(PAIR, support, linetype = genderChar)) +
-  geom_smooth(method = "lm", se = TRUE)
+  geom_smooth(method = "lm", se = FALSE)
 
 ggplot(l_scale_df, aes(PAIR, support, linetype = genderChar)) +
   geom_smooth(method = "lm", se = TRUE) +

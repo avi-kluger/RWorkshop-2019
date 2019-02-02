@@ -1,9 +1,3 @@
-# Import a package for your computer, only once for each computer
-install.packages("meta")
-
-# load the package for use, each time you start R, or after detaching it. 
-library(meta)                         
-
 # Create a vector with names of studies
 Study   <- c("Korsgaard et al., 1995", "Castro, 2015", 
              "Johnson, 1971", "Lloyd et al., 2015") 
@@ -17,6 +11,12 @@ r       <- c(.43, .57, .19, .47)
 # Create a vector with sample sizes
 N       <- c(89, 60, 128, 100)        
 
+
+# Import a package for your computer, only once for each computer
+install.packages("meta")
+
+# load the package for use, each time you start R, or after detaching it. 
+library(meta)   
 # Run function metacor from "meta" to meta analyze correlations
 metacor(r, N, Study)  
 

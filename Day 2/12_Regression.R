@@ -38,6 +38,8 @@ plot(l_scale_df$PAIR, predict(fit2))
 
 # Create a function to repeat the above for other variables
 
+
+
 test.Curve <- function (y, x, df){
   x <- df[, x]
   y <- df[, y]
@@ -56,7 +58,7 @@ test.Curve("support", "trust", l_scale_df)
 test.Curve("trust", "age_1", l_scale_df)
 
 
-test.Curve <- function (y, x, df){
+test.curve <- function (y, x, df){
   x <- df[, x]
   y <- df[, y]
   fit <- lm(y ~ x + I(x^2), data = df,
@@ -66,4 +68,20 @@ test.Curve <- function (y, x, df){
   plot(x, predict(fit))
 }
 
-test.Curve("trust", "age_1", l_scale_df)
+test.curve("trust", "age_1", l_scale_df)
+
+# the same as above, but the function will accept text and transform it to
+# character
+
+test.Curve <- function (y, x, df){
+  print(quote(x))
+  x <- df[, deparse(substitute(x))]
+  y <- df[, deparse(substitute(y))]
+  fit <- lm(y ~ x + I(x^2), data = df,
+            na.action = "na.exclude"))
+  print(summary(fit))
+  print(confint(fit))
+  plot(x, predict(fit))
+}
+
+test.Curve(support, PAIR, l_scale_df)

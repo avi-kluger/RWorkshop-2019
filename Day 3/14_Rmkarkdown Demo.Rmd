@@ -2,13 +2,15 @@
 title: "RMarkdown Demo"
 author: "Avi Kluger"
 date: "January 30, 2019"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
 
 # Method
 ## Participants
 
-But with HTLM you can also write
+But with HTML you can also write
 
 <center> <h1>Method</h1> </center>
 ## Participants

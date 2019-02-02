@@ -9,6 +9,10 @@ cat ("\014")
 if(is.null(dev.list()) == FALSE) dev.off()
 #------------- End of House Keeping --------------------------------------------
 
+# Try to read the csv file, and fail
+listen_df <- read.csv("listenSurvey.csv", stringsAsFactors = FALSE)
+
+
 # Find (get) working directory (wd). Note that the address has forward slashes 
 # a backslash leans backwards ( \ ), while a forward slash leans forward ( / )
 getwd()
@@ -17,11 +21,7 @@ getwd()
 # if you copy from windows, either revrese the slashes or use double slash
 setwd("C:/Users/owner/Dropbox/Files/Courses/RWorkshop-2019/Read & Clean Data")
 getwd()
-setwd("C:\\Users\\owner\\Dropbox\\Files\\Courses\\RWorkshop-2019\\Read & Clean Data")
-getwd()
-# If you want to break a long line of address, use paste0
-setwd(paste0("C:\\Users\\owner\\Dropbox\\Files\\Courses\\RWo",
-             "rkshop-2019\\Read & Clean Data"))
+setwd("C:\\Users\\owner\\Dropbox\\Files\\Courses\\RWorkshop-2019\\Day 1")
 getwd()
 
 # read a file that has comma-separated values
@@ -75,12 +75,13 @@ Link      <- paste0("https://survey.Qualtrics.com//WRAPI/ControlPanel/api.php?",
                     "API_SELECT=ControlPanel&Version=2.5&Request=getLegacy",
                     "ResponseData&User=", USER.name, "&Token=", API.token, 
                     "&Format=CSV&Labels=0&ExportTags=1&SurveyID=",SURVEY.id) 
-#Unstar the indented commands after replacing USER.name, API.token & SURVEY.id
+# Remove # from the indented commands after replacing USER.name, 
+# API.token & SURVEY.id
+
 #infomration
     # all_content <- readLines(Link)
 # Drop the second header line created by Qualtrics
     # skip_second <- all_content[-2]
-
 # textConnection: reads the data from skip_second 
     # df      <- read.csv(textConnection(skip_second), 
     #            header = TRUE, stringsAsFactors = FALSE)
@@ -95,10 +96,8 @@ rm(list=setdiff(ls(), "listen_df"))
 # Let's see what is inside the data frame
 names(listen_df)
 as.data.frame(names(listen_df))
-
 head(listen_df)
 tail(listen_df)
 
 # View dataframe beyond the first 100 columns
 utils::View(listen_df)
-

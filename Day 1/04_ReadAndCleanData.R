@@ -1,14 +1,12 @@
 rm(list = ls())
-cat ("\014")
 if(is.null(dev.list()) == FALSE) dev.off()
+cat ("\014")
 
 listen_df <- read.csv(
              "https://www.dropbox.com/s/modnpbbqjrmuodr/listenSurvey.csv?dl=1",
              stringsAsFactors = FALSE)
 
-
 # Exploring a single variable.  Three ways to index a variable
-
 listen_df$filter1
 listen_df[, "filter1"]
 listen_df[, 1]
@@ -18,27 +16,6 @@ is.na(listen_df$filter1)
 
 # count number of missing data
 sum(is.na(listen_df$filter1))
-################################################################################
-# Power Analysis examples 
-################################################################################
-
-# For introduction and examples see http://www.statmethods.net/stats/power.html
-# install.packages("yaml") 
-if (!require('pwr')) {
-  install.packages('pwr')
-}
-library('pwr')
-
-pwr.t.test(d = 0.50, 
-           sig.level = .05, 
-           power = .80, 
-           type = c("two.sample"), 
-           alternative = c("greater"))
-
-pwr.r.test(r = .2, 
-           power = .80, 
-           sig.level = .05, 
-           alternative = "two.sided")
 
 # print to console the record with the missing datum on filter1
 listen_df[which(is.na(listen_df$filter1)), ]
@@ -59,7 +36,8 @@ apply(demo_df, 1, mean)
 apply(demo_df, 2, mean)
 
 # move from the demo with means to the real data with two functions
-# explore problem rows (participants)
+# explore problem rows (participants).  The logic of functions is explained
+# later
 apply(listen_df, 1, function(x) sum(is.na(x)))
 
 # add this array to the listen_df as a new column
@@ -79,6 +57,10 @@ names(listen_df)
 
 # delete SWL and create new dataframes
 listenCleanPrimitive_df <- listen_df[, -c(279:283)]
+
+# Introduction to grep
+myString <- c("a", "b", "c", "a")
+grep("a", myString)
 
 # find the column numbers with grep
 grep("SWL", names(listen_df))
@@ -136,7 +118,7 @@ listenClean_df[, -demographics] <- listenClean_df[, -demographics] - 1
 describe(listenClean_df[, -demographics])
 
 # Explore demographics
-apply(listenClean_df[, demographics], 2, table)listenClean_df
+apply(listenClean_df[, demographics], 2, table)
 
 # explore distributions
 trust <- grep("trust", names(listenClean_df))

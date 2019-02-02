@@ -2,3 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+*.doc
+*.docx
+*.html
+*.png
+Feedback 1.Rmd

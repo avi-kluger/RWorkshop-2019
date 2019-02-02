@@ -2,8 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+*.RData
 *.doc
 *.docx
 *.html
 *.png
-Feedback 1.Rmd
+Feedback 1.*
+Satisfaction survey.R

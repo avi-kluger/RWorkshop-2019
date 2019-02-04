@@ -16,7 +16,8 @@ boxplot(l_scale_df$support ~ l_scale_df$genderChar)
 boxplot(support ~ genderChar, data = l_scale_df, 
         main="Feeling supported by one's manager", 
         xlab="Gender", 
-        ylab="Support")
+        ylab="Support",
+        notch = TRUE)
 
 # getting means and SDs with apaTables
 if (!require('apaTables')) install.packages('apaTables'); library('apaTables')

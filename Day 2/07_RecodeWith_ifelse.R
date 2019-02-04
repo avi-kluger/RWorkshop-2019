@@ -3,7 +3,9 @@ cat ("\014")
 if(is.null(dev.list()) == FALSE) dev.off()
 
 load("Listen.RData")
-l_df <- listenClean_df
+
+# Create a new *df* with short name
+l_df <- listen_df
 rm(list=setdiff(ls(), c("l_df", "demographics")))
 
 # ifelse Section ---------------------------------------------------------------
@@ -26,6 +28,7 @@ names(l_df[, demographics])
 
 table(l_df$gender)
 table(l_df$supervisor_gender)
+
 l_df$genderChar  <- ifelse(l_df$gender == 1, "Male", 
                            ifelse(l_df$gender == 2, "Female", NA))
 l_df$SgenderChar <- ifelse(l_df$supervisor_gender == 1, "Boss Male", 
@@ -45,5 +48,5 @@ table(l_df$yearsCategoryCharacter)
 
 # A note on *if* in R -- VERY IMPORTANT! if operates only on an atomic vector
 
-rm(list=setdiff(ls(), "l_df")) 
+rm(list=setdiff(ls(), c("l_df", "demographics")))
 save.image("ListenRecoded.RData")

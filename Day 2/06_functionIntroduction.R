@@ -72,7 +72,7 @@ for (i in 1:10){
 # Use for loop and output its results to a data frame
 # Create an empty dataframe.
 dVector <- data.frame(sampleSize = numeric(), 
-                        CohenSd = numeric())
+                         CohenSd = numeric())
 dVector
 
 for (i in 1:10){

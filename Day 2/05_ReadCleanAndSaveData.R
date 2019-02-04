@@ -6,138 +6,121 @@ cat ("\014")
 listen_df <- read.csv(
              "https://www.dropbox.com/s/modnpbbqjrmuodr/listenSurvey.csv?dl=1",
              stringsAsFactors = FALSE)
+################ Getting rid of problem rows (participants) ####################
 
-# Exploring a single variable.  Three ways to index a variable
-listen_df$filter1
-listen_df[, "filter1"]
-listen_df[, 1]
-
-# test for missing data (NAs) on one column
-is.na(listen_df$filter1)
-
-# count number of missing data
-sum(is.na(listen_df$filter1))
-
-# print to console the record with the missing datum on filter1
-listen_df[which(is.na(listen_df$filter1)), ]
-
-# transpose the output above for easy reading. (Note that output is character).
-t(listen_df[which(is.na(listen_df$filter1)), ])
-
-# test for missing data (NAs) on all columns
-# first, let's understand the apply function on small data set
-# let's create demo data set from listen_df with 10 observations and 5 columns
-# subseting rows by numbers, and columns by names.
-demo_df <- listen_df[1:10, 
-                     c("trust_1", "trust_2", "trust_3", "trust_4", "trust_5")]
-demo_df
-
-# apply function 1 = rows, 2 = columns
-apply(demo_df, 1, mean)
-apply(demo_df, 2, mean)
-
-# move from the demo with means to the real data with two functions
-# explore problem rows (participants).  The logic of functions is explained
-# later
-apply(listen_df, 1, function(x) sum(is.na(x)))
-
-# add this array to the listen_df as a new column
+# Create a new column *naCount* containing number of missing data per row
 listen_df$naCount <- apply(listen_df, 1, function(x) sum(is.na(x)))
 
 # explore the frequency of missing data by row
 table(listen_df$naCount)
 
-# explore problem columns (variables)
-apply(listen_df, 2, function(x) sum(is.na(x)))
-as.data.frame(apply(listen_df, 2, function(x) sum(is.na(x))))
+# delete rows with 10 or more missing data
+listen_df <- listen_df[which(listen_df$naCount < 10), ]
 
-# What to do with NAs: delete, substitute, keep?
-# delete variables with too many missing values (SWL)
-# find the column numbers of SWL items, the primitive way
-names(listen_df)
+# explore the frequency of missing data by row AFTER removing rows above 
+table(listen_df$naCount)
 
-# delete SWL and create new dataframes
-listenCleanPrimitive_df <- listen_df[, -c(279:283)]
+################ Getting rid of problem columns (variables) ####################
 
-# find the column numbers with grep
-grep("SWL", names(listen_df))
-listenClean_df <- listen_df[, -c(grep("SWL", names(listen_df)))]
-listenCleanPrimitive_df == listenClean_df
-all.equal(listenCleanPrimitive_df, listenClean_df)
+# explore the frequency of missing data by columns (variables).  Note that the
+# results are sent to a new vector.  Just be aware of what is being created.
+naColumns <- apply(listen_df, 2, function(x) sum(is.na(x)))
+which(naColumns > 0)                           # which columns
+naColumns[which(naColumns > 0)]                # the content of selected columns
+as.data.frame(naColumns[which(naColumns > 0)]) # the content rearrangged
 
-#clean the Global Environment from all unnecesary objects
-rm(list=setdiff(ls(), "listenClean_df"))
-
-# test the remaining row problems
-naCount <- apply(listenClean_df, 1, function(x) sum(is.na(x)))
-
-# explore the frequency of missing data by row
-table(naCount)
-
-# delete records with 10 or more missing data
-listenClean_df <- listenClean_df[which(naCount < 10), ]
-names(listenClean_df)
-table(listenClean_df$naCount)
-
-# mean subsitution 
-colNA <- as.data.frame(apply(listenClean_df, 2, function(x) sum(is.na(x))))
-table(colNA)
-which(t(colNA) == 7)
-names(listen_df[, which(t(colNA) == 7)])
-mean(listenClean_df$tenure)
-mean(listenClean_df$tenure, na.rm = TRUE)
-listenClean_df$tenure[is.na(listenClean_df$tenure)]  <- 
-                       mean(listenClean_df$tenure, na.rm = TRUE)
-listenClean_df$tenure
+# create a new *df* without the SWL columns
+listen_df <- listen_df[, -c(grep("SWL", names(listen_df)))]
 
 # get rid of unnecessary columns
-junk           <- grep("filter", names(listenClean_df))
-listenClean_df <- listenClean_df[, -junk]
+junk      <- grep("filter", names(listen_df))
+listen_df <- listen_df[, -junk]
 
+############################### mean subsitution ###############################
+# calculate the mean of years in the profession. Produces NA
+mean(listen_df$profession_overall_1)
+
+# find out how to force mean to work with NA with help().  Note for function
+# that are in packages, search for help with ??functionYouWant
+help(mean)
+
+# Use the argument found in help
+mean(listen_df$profession_overall_1, na.rm = TRUE)
+
+listen_df$profession_overall_1[is.na(listen_df$profession_overall_1)]  <- 
+                       mean(listen_df$profession_overall_1, na.rm = TRUE)
+mean(listen_df$profession_overall_1)
+
+# clean the Global Environment from all unnecesary objects
+rm(list=setdiff(ls(), "listen_df"))
+
+
+######################### Explore all data numerically #########################
 if (!require('psych')) {
   install.packages('psych')
 }
 
 library('psych')
-describe(listenClean_df)
+describe(listen_df)
 
 # repeat without the demographics
-demographics <- 270:ncol(listenClean_df)
-describe(listenClean_df[, -demographics])
+demographics <- 270:ncol(listen_df)
+describe(listen_df[, -demographics])
+
 # print all output
 options(max.print = 100000)
-describe(listenClean_df[, -demographics])
+describe(listen_df[, -demographics])
 
 # change the values of all non-demographics to range between 0 and 10
-listenClean_df[, -demographics] <- listenClean_df[, -demographics] - 1
+listen_df[, -demographics] <- listen_df[, -demographics] - 1
 
 # test previous step
-describe(listenClean_df[, -demographics])
+describe(listen_df[, -demographics])
 
 # Explore demographics
-apply(listenClean_df[, demographics], 2, table)
+apply(listen_df[, demographics], 2, table)
 
-# explore distributions
-trust <- grep("trust", names(listenClean_df))
-boxplot(listenClean_df[, trust])
-stem(listenClean_df[, trust])
-class(listenClean_df[, trust])
-stem(listenClean_df[, "trust_1"])
-apply(listenClean_df[, trust], 2, stem)
+######################### Explore all data graphically #########################
+# choose a set of variables
+trust <- grep("trust", names(listen_df))
 
-cor(listenClean_df[, trust])
-round(cor(listenClean_df[, trust]), 2)
-as.dist(round(cor(listenClean_df[, trust]), 2))
+# run boxplot
+boxplot(listen_df[, trust])
+
+# attempt stem.  Fails!
+stem(listen_df[, trust])
+
+# Understand the failure
+class(listen_df[, trust])
+
+# use stem with numeric input
+stem(listen_df[, "trust_1"])
+
+# use apply to cycle all columns, one at a time
+apply(listen_df[, trust], 2, stem)
+
+# inspect correlation matrix
+cor(listen_df[, trust])
+
+# round the correlation matrix
+round(cor(listen_df[, trust]), 2)
+
+# produce only the below diagonal results
+as.dist(round(cor(listen_df[, trust]), 2))
 
 # Prepare APA 6th Style output
 if (!require('apaTables')) install.packages('apaTables'); library('apaTables')
-apa.cor.table(listenClean_df[, trust])
-apa.cor.table(listenClean_df[, trust], 
+apa.cor.table(listen_df[, trust])
+apa.cor.table(listen_df[, trust], 
               filename = "MyFirstTable.doc", 
               table.number = 5)
 
 # Section Two ===============================
-write.csv(listenClean_df, "listenClean.csv")
+
+# write listen_df to a new *csv* file in the working directory
+write.csv(listen_df, "listenClean.csv")
+
 # Section Three #############################
 
+# save the Global Environment into .RData file
 save.image("Listen.RData")

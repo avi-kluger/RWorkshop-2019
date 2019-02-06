@@ -3,7 +3,6 @@ title: "RMarkdown Demo"
 author: "Avi Kluger"
 date: "January 30, 2019"
 output:
-  word_document: default
   html_document: default
 ---
 

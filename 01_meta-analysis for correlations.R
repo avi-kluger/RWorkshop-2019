@@ -63,3 +63,10 @@ pwr.r.test(r = .2,
            power = .80, 
            sig.level = .05, 
            alternative = "two.sided")
+
+# Practice.
+
+# 1. Run your own meta-analysis.
+
+# 2. Use your meta-analysis result to calculate required sample size to 
+# replicate the meta-analysis.

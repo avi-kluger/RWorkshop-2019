@@ -112,3 +112,23 @@ v1[6:10] <- 6:10
 
 # We can also directly assign the vector a length:
 length(v1) <- 15 # the last 5 elements are added as missing data: NA
+
+############################ Practice ##########################################
+
+# 1. Create a vector with the names of 4 children that you like.  Assign this
+# vector to a new object named myChildren. Print this object to the console.
+
+# 2. Create a vector with the ages of the 4 children that you like.  Assign this
+# vector to a new object named childAge.  Print this object to the console.
+
+# 3. Calculate the ages in childAge in months.  Please the results in a new 
+# vector named childAgeInMonths.
+
+# 4. Print to the console the ages in month of the 2nd and 3rd child
+
+# 5. Print to the console the ages of children that are older than 60 months.
+
+# 6. Place a vector created in #5 in a new vector named schoolAgeAges. Print it.
+
+
+

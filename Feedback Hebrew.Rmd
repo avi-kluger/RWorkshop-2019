@@ -1,0 +1,80 @@
+---
+title: "Feedback IDC"
+author: "Avi Kluger"
+date: "February 1, 2019"
+output: html_document
+---
+
+```{r echo=FALSE}
+
+# Drop test rows and Qualtrics columns and the first Text message
+df      <- df [, -c(1:10)]
+df      <- df [-c(1:21), -5]
+
+
+```
+
+# R workshop feedback
+
+At the end of the workshop, I asked you to answer four questions:
+
+1. Overall, I am satisfied with the content of the R workshop
+2. Overall, I am satisfied with the content of the lecturer
+3. Please write comments
+4. if a summer workshop with Avi Kluger will be offered on using R for HLM, SEM, and advanced topics, will you register?
+
+Below is the code, explained, and the resulting analyses.
+
+I read the data from Qualtrics, not shown here.  I dropped one line with missing values.  I was left with 20 valid responses.  I created an empty data frame that has names that could include spaces, and replaced the names of the df with the names I created in temp_df.
+
+Next, I loaded the *psych* library and produced just the very basic statistics for the first two items
+
+
+```{r}
+df <- na.omit(df)
+
+temp_df <- data.frame("Course Satisfaction" = numeric(), 
+                      "Lecturer Satisfaction" = numeric(),
+                      "Comments" = character(),
+                      "Interest in future workshops" = numeric(), 
+                      check.names = FALSE)
+
+names(df) <- names(temp_df)
+
+library(psych)
+
+describe(df[, 1:2]) [c("n", "mean", "sd")]
+```
+
+Next, I tested whether you were more satisfied with the lecturer than with the course, using paired-sample *t*-test.
+
+```{r}
+t.test(df$`Course Satisfaction`, 
+       df$`Lecturer Satisfaction`, 
+       paired=TRUE, 
+       conf.level=0.95)
+```
+
+The results of *t*-test indicated that you were more satisfied with the lecturer than with the course.  Next, I choose the comments that were not empty AND not in Hebrew (the 4th and the 5th answer)
+
+```{r}
+Comments <- df$Comments[which(df$Comments != "")][-c(4:5)]
+library(knitr)
+kable(Comments[-1], caption = "Comments regarding the R workshop",
+      col.names = c("verbatim"))
+```
+
+
+Finally, I converted the `Interest in future workshops` into a factor, and defined labels for its levels, and I used barplot to show the frequencies of your responses.
+
+```{r}
+df$`Interest in future workshops` <- factor(df$`Interest in future workshops`,
+                                        levels = (c(0, 0.5, 1)),
+                                        labels = c("Not interested",
+                                                   "Perhaps",
+                                                   "Interested"))
+barplot(table(df$`Interest in future workshops`), main = 
+   "Frequencies of levels of interest in future R workshop\nwith Avi Kluger")
+```
+
+

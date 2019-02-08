@@ -138,3 +138,5 @@ apa.cor.table(listenClean_df[, trust])
 apa.cor.table(listenClean_df[, trust], 
               filename = "MyFirstTable.doc", 
               table.number = 5)
+# Homework
+# Produce a correlation matrix with your data

@@ -19,9 +19,9 @@ getwd()
 
 # Change (set) working directory (wd)
 # if you copy from windows, either revrese the slashes or use double slash
-setwd("C:/Users/owner/Dropbox/Files/Courses/RWorkshop-2019/Read & Clean Data")
+setwd("C:/Users/owner/Dropbox/Files/Courses/RWorkshop-2019")
 getwd()
-setwd("C:\\Users\\owner\\Dropbox\\Files\\Courses\\RWorkshop-2019\\Day 1")
+setwd("C:\\Users\\owner\\Dropbox\\Files\\Courses\\RWorkshop-2019")
 getwd()
 
 # read a file that has comma-separated values

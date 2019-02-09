@@ -7,5 +7,7 @@
 *.docx
 *.html
 *.png
+*.Rproj
 Feedback 1.*
+Feedback*.*
 ./Satisfaction survey.R

@@ -132,3 +132,4 @@ buildScale <- function(scaleNames, df = l_df) {
 # Call the function that can receive a vector of scales,
 # and place its output in a new df
 out_df      <- buildScale(c("trust", "Empathy", "PAIR", "support"))
+

@@ -48,6 +48,11 @@ calcPercent <- function (fraction) {
 }
 calcPercent(5/7)
 
+# Practice: Write a function that accepts a price and adds to it 17% VAT.
+# name the function calculate.VAT.  To embelish, add to it NIS suffix.
+
+
+
 # 2. A function with multiple arguments
 Cohen.s.d <- function (m1, m2, s1, s2, n1, n2) {
   diff      <- m1 - m2
@@ -94,3 +99,11 @@ for (i in seq(10, 1000, by = 10)) {
 plot(dVector)
 plot(dVector, main = "d value when means are 1 and 0.5, SDs 2 and 1, sample
      size in group 1 is 10, by sample size in group 2" )
+
+# Practice: Create a for loop to calculate percents for dividing a numeric 
+# vector by 7.  Make to loop run on all the numbers between 1 and 10
+# If you don't like the appearance of your output, consult:
+# https://stackoverflow.com/questions/4055762/in-r-can-i-stop-printcat-from-returning-null-and-why-does-catfoo-ret
+
+
+

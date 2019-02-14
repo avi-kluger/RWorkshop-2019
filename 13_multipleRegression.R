@@ -18,7 +18,7 @@ l_scale_df$centeredPAIR <- scale(l_scale_df$PAIR, scale = FALSE)
 # test mean  and SD of centered variable
 mean(l_scale_df$centeredPAIR); sd(l_scale_df$centeredPAIR)
 
-# round to understand what -4 * 10 to the power of -16 means practically
+# round to understand what -4 * 10 to the power of -16 means practically 0
 round(mean(l_scale_df$centeredPAIR), 10)
 
 # Standardized PAIR.  Same function as for centering without the scale = FALSE
@@ -55,8 +55,6 @@ summary(mod)
 browseURL("https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf")
 if (!require('ggplot2')) install.packages('ggplot2'); library('ggplot2')
 
-# set white rather than gray background
-theme_set(theme_bw())
 # Build a plot with layers (first line creates the grid)
 # the stuff after the '+' sign adds the graph
 # you can add more '+'s and add additional layers
@@ -66,13 +64,22 @@ ggplot(l_scale_df, aes(PAIR, support, linetype = genderChar))
 ggplot(l_scale_df, aes(PAIR, support, linetype = genderChar)) +
   geom_smooth(method = "lm", se = FALSE)
 
+# Change theme to classic 
+ggplot(l_scale_df, aes(PAIR, support, linetype = genderChar)) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic()
+
+# set the theme outside ggplot to affect all ggplot below 
+# this time with white rather than gray background
+theme_set(theme_bw())
+
+# Add a layer of labels
 ggplot(l_scale_df, aes(PAIR, support, linetype = genderChar)) +
   geom_smooth(method = "lm", se = TRUE) +
   labs(title = "The effect of intimacy (PAIR) on support by Gender",
        subtitle = "with confidence intervals")
 
 # Interaction between two continous predictors
-
 fitStandardized <- lm(scale(support) ~ 0 + scale(tenure)*scale(PAIR), 
                       data = l_scale_df)
 summary(fitStandardized)

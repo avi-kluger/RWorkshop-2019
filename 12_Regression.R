@@ -38,10 +38,10 @@ plot(l_scale_df$PAIR, predict(fit2))
 
 # Create a function to repeat the above for other variables
 
-test.Curve <- function (y, x, df){
-  x <- df[, x]
-  y <- df[, y]
-  fit <- lm(y ~ x + I(x^2), data = df)
+test.Curve <- function (DV, IV, df){
+  x <- df[, IV]
+  y <- df[, DV]
+  fit <- lm(y ~ x + I(x^2))
   print(summary(fit))
   print(confint(fit))
   plot(x, predict(fit))

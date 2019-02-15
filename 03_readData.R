@@ -42,8 +42,9 @@ listen_df <- read.csv(
 # sections with "", separate them with commas, wrap with paste0, and wrap with
 # read.csv
 listen_df <- read.csv(paste0("https://raw.githubusercontent.com/avi-kluger/",
-                             "RWorkshop-2019/master/Read%20%26%20Clean%20Data/",
-                             "listenSurvey.csv"), stringsAsFactors = FALSE)
+                             "RWorkshop-2019/master/listenSurvey.csv"),
+                             stringsAsFactors = FALSE)
+
 # read diffrent data from the internet in SPSS format.  This can cause problems
 # *.csv files are easy for R. If you run into problems with your data, consider
 # saving your *.sav file to *.csv in SPSS.
@@ -101,3 +102,4 @@ tail(listen_df)
 
 # View dataframe beyond the first 100 columns
 utils::View(listen_df)
+
